@@ -160,3 +160,19 @@ if (mark.calcBMI() > tim.calcBMI()) {
 } else if (tim.calcBMI() > mark.calcBMI()) {
   console.log(tim.fullName + ' has a higher BMI of ' + tim.bmi);
 }
+
+//Continue and Break statements
+//Basically continue means 'skip this one' in the loop if true and
+//Break means if true, exit the loop
+
+var jeff = ['John', 'Mary', 1990, 'designer', false, 'blue'];
+
+for (var i = 0; i < jeff.length; i++) {
+  if (typeof jeff[i] !== 'string') continue;
+  console.log(jeff[i]);
+}
+
+console.log('****REVERSE LOOP****');
+for (var i = jeff.length-1; i >= 0; i--) {
+  console.log(jeff[i]);
+}
