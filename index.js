@@ -250,3 +250,97 @@ if (johnObj.tipAverage > markObj.tipAverage) {
 } else {
   console.log('Both families pay equal amounts of tips');
 }
+
+/*******************
+* HOISTING
+*/
+
+//Function declarations and Variables are available ('hoisted') in the
+//'Creation Phase' of the Variable Object before execution
+//Function declarations are available pointing to the Function and
+//Variables are available as undefined
+
+//Function is defined first
+function calculateAge(year) {
+  console.log(2019 - year);
+}
+
+//And then it is called
+calculateAge(1995);
+
+//But what happens if you call it first?
+calculateAge1(1990);
+
+function calculateAge1(year) {
+  console.log(2019 - year);
+}
+//It works because 'function declarations' are available before using/execution
+
+//What about Function Expressions?
+//What happens when you call the Function expression before?
+//retirement(1974);
+//It will not work because hoisting only works for function declarations and not expressions.
+
+var retirement = function(year) {
+  console.log(65 - (2019 - year));
+}
+
+//Now call the Expression. This works because fuction expression will be available
+retirement(1990);
+
+/////////////////////
+//Variables
+//What happens when you use the Variable before you declare it?
+
+console.log(newAge); //It will come as undefined because
+var newAge = 23;
+console.log(newAge);
+
+////Understanding 'this'
+//For a 'regular function' call, the 'this' keyword
+//points to the global object, which is Window
+recalculateAge(1985);
+
+function recalculateAge(year) {
+  console.log(2019 - year);
+  console.log('This is where the \'this\' keyword points ----> ' + this);
+  console.log(this);
+}
+
+//For a 'method call' , which is basically a function within an object,
+//the 'this' keyword points to the object that is calling the method
+
+var maryObj = {
+  fullName: 'Mary Lee',
+  yearOfBirth: 1990,
+  calculateAge: function() {
+    console.log('**************');
+    console.log('This is where the \'this\' keyword points ----> ' + this);
+    console.log(this); //The this keyword will point to maryObj
+    console.log(2019 - this.yearOfBirth);
+    //But what happens if I put another function here and use the this keyword?
+    //It will not point to the 'maryObj' because this is a regular function call
+    //Therefore, it will point to the Window object.
+    function innerfunction() {
+      console.log('********INNER FUNCTION********')
+      console.log('This is where the innerfunction() this keyword points ----> '+ this);
+      console.log(this);
+    }
+    innerfunction();
+  }
+};
+
+maryObj.calculateAge();
+
+
+var bobObj = {
+  fullName: 'Bob the Builder',
+  yearOfBirth: 1984
+};
+
+//The following is called Method Borrowing in JS
+bobObj.calculateAge = maryObj.calculateAge;
+//We are using the variable directly from the maryObj object
+//to get the entire method here in bobObj
+
+bobObj.calculateAge();
