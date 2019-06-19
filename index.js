@@ -176,3 +176,69 @@ console.log('****REVERSE LOOP****');
 for (var i = jeff.length-1; i >= 0; i--) {
   console.log(jeff[i]);
 }
+
+
+/***************************
+* CODING CHALLENGE 5
+*/
+
+var johnObj = {
+  firstName: 'John',
+  billArray: [124, 48, 268, 180, 42],
+  tipArray: [],
+  totalArray: [],
+  tipCalculate: function() {
+    for (var i = 0; i < this.billArray.length ; i++) {
+      if (this.billArray[i] < 50) {
+        this.tipArray[i] = 0.2 * this.billArray[i];
+        this.totalArray[i] = this.tipArray[i] + this.billArray[i];
+      } else if (this.billArray[i] >= 50 && this.billArray[i] <= 200) {
+        this.tipArray[i] = 0.15 * this.billArray[i];
+        this.totalArray[i] = this.tipArray[i] + this.billArray[i];
+      } else {
+        this.tipArray[i] = 0.1 * this.billArray[i];
+        this.totalArray[i] = this.tipArray[i] + this.billArray[i];
+      }
+    }
+  }
+};
+
+var markObj = {
+  name: 'Mark',
+  billArray: [77, 375, 110, 45],
+  tipCalculate: function() {
+    //This is the other solution for the same problem
+    //A much better approach
+    this.tipArray = []; //creates tipArray in this object
+    this.totalsArray = []; //creates totalsArray in this object
+    for (var i = 0; i < this.billArray.length ; i++) {
+      var percentage;
+      var bill = this.billArray[i];
+      if (this.billArray[i] < 100) {
+        percentage = 0.2;
+      } else if (this.billArray[i] >= 100 && this.billArray[i] <= 300) {
+        percentage = 0.1;
+      } else {
+        percentage = 0.25;
+      }
+      this.tipArray[i] = percentage * bill;
+      this.totalsArray[i] = this.tipArray[i] + bill;
+    }
+  }
+};
+
+function tipArrayAVG(tips) {
+  var tipSum = 0;
+  for (var i = 0; i < tips.length; i++) {
+    tipSum += tips[i];
+  }
+  return tipSum / tips.length;
+}
+
+johnObj.tipCalculate();
+markObj.tipCalculate();
+
+johnObj.tipAverage = tipArrayAVG(johnObj.tipArray);
+markObj.tipAverage = tipArrayAVG(markObj.tipArray);
+
+console.log(johnObj, markObj);
