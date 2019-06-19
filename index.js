@@ -183,7 +183,7 @@ for (var i = jeff.length-1; i >= 0; i--) {
 */
 
 var johnObj = {
-  firstName: 'John',
+  name: 'John Smith',
   billArray: [124, 48, 268, 180, 42],
   tipArray: [],
   totalArray: [],
@@ -204,7 +204,7 @@ var johnObj = {
 };
 
 var markObj = {
-  name: 'Mark',
+  name: 'Mark Miller',
   billArray: [77, 375, 110, 45],
   tipCalculate: function() {
     //This is the other solution for the same problem
@@ -242,3 +242,11 @@ johnObj.tipAverage = tipArrayAVG(johnObj.tipArray);
 markObj.tipAverage = tipArrayAVG(markObj.tipArray);
 
 console.log(johnObj, markObj);
+
+if (johnObj.tipAverage > markObj.tipAverage) {
+  console.log(johnObj.name + '\'s Family pays higher tips in general at the rate of $' + johnObj.tipAverage);
+} else if (markObj.tipAverage > johnObj.tipAverage) {
+  console.log(markObj.name + '\'s Family pays higher tips in general at the rate of $' + markObj.tipAverage);
+} else {
+  console.log('Both families pay equal amounts of tips');
+}
