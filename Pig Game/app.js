@@ -9,8 +9,7 @@ GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer, gamePlaying;
-
+var scores, roundScore, activePlayer, gamePlaying, prevCount;
 init();
 
 //document.querySelector('#current-' + activePlayer).textContent = dice; //SETTER
@@ -54,6 +53,26 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
     diceDOM.style.display = 'block'; //block displays the image
     diceDOM.src = 'dice-' + dice + '.png'; //changing the dice image src as per rolled dice number
 
+    /****CHALLENGE 1
+    CHECK IF 2 sixes in a row. Change the ENTIRE score to 0 and switch player
+    */
+    console.clear();
+    console.log('Previous: ' + prevCount);
+    console.log('Dice: ' + dice);
+    //If previous count is 6
+    if (prevCount === 6) {
+      //and if current dice is 6
+      if (dice === 6) {
+        //set the score and textcontent to 0
+        document.querySelector('#score-' + activePlayer).textContent = 0;
+        scores[activePlayer] = 0;
+        prevCount = 0; //Sets previous count to 0 because player lost due to 6 and 6
+        nextPlayer(); //switch to next player1
+      }
+    }
+
+    prevCount = dice;
+
     //3. Update the round score ONLY IF Rolled Number !== 1
     if (dice !== 1) {
       roundScore += dice;
@@ -74,7 +93,7 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
     document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
 
     //Check for the winner
-    if (scores[activePlayer] >= 10) {
+    if (scores[activePlayer] >= 100) {
       document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
       document.querySelector('.dice').style.display = 'none';
       document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
@@ -93,6 +112,7 @@ document.querySelector('.btn-new').addEventListener('click', init);
 function nextPlayer() {
   activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
   roundScore = 0;
+  prevCount = 0;  //set the previous count to 0 for the nextPlayer upon clicking Hold
 
   document.getElementById('current-0').textContent = '0';
   document.getElementById('current-1').textContent = '0';
@@ -106,6 +126,7 @@ function nextPlayer() {
 function init() {
   scores = [0, 0];
   roundScore = 0;
+  prevCount = 0;
   activePlayer = 0;
   gamePlaying = true;
 
