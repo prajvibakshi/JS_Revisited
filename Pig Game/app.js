@@ -9,7 +9,7 @@ GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer, gamePlaying, prevCount;
+var scores, roundScore, activePlayer, gamePlaying, prevCount, winScore;
 init();
 
 //document.querySelector('#current-' + activePlayer).textContent = dice; //SETTER
@@ -56,7 +56,7 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
     /****CHALLENGE 1
     CHECK IF 2 sixes in a row. Change the ENTIRE score to 0 and switch player
     */
-    console.clear();
+    //console.clear();
     console.log('Previous: ' + prevCount);
     console.log('Dice: ' + dice);
     //If previous count is 6
@@ -93,7 +93,7 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
     document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
 
     //Check for the winner
-    if (scores[activePlayer] >= 100) {
+    if (scores[activePlayer] >= winScore) {
       document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
       document.querySelector('.dice').style.display = 'none';
       document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
@@ -144,4 +144,11 @@ function init() {
   document.querySelector('.player-1-panel').classList.remove('active');
 
   document.querySelector('.player-0-panel').classList.add('active');
+
+  setWinScore();
+}
+
+function setWinScore() {
+  winScore = document.getElementById('input-winscore').value ;
+  console.log(winScore);
 }
