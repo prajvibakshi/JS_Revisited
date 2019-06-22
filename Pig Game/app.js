@@ -47,18 +47,24 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
   //1. We need to have a Random number
   if (gamePlaying) {
     var dice = Math.floor(Math.random() * 6) + 1;
+    //Challenge 3 - Introduce 2nd Dice and track if either gets a 1, to move to the nextPlayer
+    var diceTwo = Math.floor(Math.random() * 6) + 1; //Second Dice
 
     //2. Display the result
     var diceDOM = document.querySelector('.dice');
     diceDOM.style.display = 'block'; //block displays the image
     diceDOM.src = 'dice-' + dice + '.png'; //changing the dice image src as per rolled dice number
 
+    document.querySelector('.diceTwo').style.display = 'block';
+    document.querySelector('.diceTwo').src = 'dice-' + diceTwo + '.png';
+
     /****CHALLENGE 1
     CHECK IF 2 sixes in a row. Change the ENTIRE score to 0 and switch player
     */
-    //console.clear();
+    console.clear();
     console.log('Previous: ' + prevCount);
-    console.log('Dice: ' + dice);
+    console.log('Dice One: ' + dice);
+    console.log('Dice Two: ' + diceTwo);
     //If previous count is 6
     if (prevCount === 6) {
       //and if current dice is 6
@@ -74,7 +80,7 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
     prevCount = dice;
 
     //3. Update the round score ONLY IF Rolled Number !== 1
-    if (dice !== 1) {
+    if (dice !== 1 && diceTwo !== 1) {
       roundScore += dice;
       document.querySelector('#current-' + activePlayer).textContent = roundScore;
     } else {
@@ -96,6 +102,7 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
     if (scores[activePlayer] >= winScore) {
       document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
       document.querySelector('.dice').style.display = 'none';
+      document.querySelector('.diceTwo').style.display = 'none';
       document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
       document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
       gamePlaying = false;
@@ -121,6 +128,7 @@ function nextPlayer() {
   document.querySelector('.player-1-panel').classList.toggle('active');
 
   document.querySelector('.dice').style.display = 'none';
+  document.querySelector('.diceTwo').style.display = 'none';
 }
 
 function init() {
@@ -131,6 +139,7 @@ function init() {
   gamePlaying = true;
 
   document.querySelector('.dice').style.display = 'none'; //None hides the image
+  document.querySelector('.diceTwo').style.display = 'none';
   document.querySelector('#score-0').textContent = '0';
   document.querySelector('#score-1').textContent = '0';
   document.getElementById('current-0').textContent = '0'; //you can also use this
@@ -148,6 +157,8 @@ function init() {
   setWinScore();
 }
 
+
+//Challenge 2 - have an input field to set the WinScore
 function setWinScore() {
   winScore = document.getElementById('input-winscore').value ;
   console.log(winScore);
