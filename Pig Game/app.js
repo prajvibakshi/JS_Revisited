@@ -47,7 +47,7 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
   //1. We need to have a Random number
   if (gamePlaying) {
     var dice = Math.floor(Math.random() * 6) + 1;
-    //Challenge 3 - Introduce 2nd Dice and track if either gets a 1, to move to the nextPlayer
+    //CHALLENGE 3 - Introduce 2nd Dice and track if either gets a 1, then move to the nextPlayer
     var diceTwo = Math.floor(Math.random() * 6) + 1; //Second Dice
 
     //2. Display the result
@@ -62,30 +62,26 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
     CHECK IF 2 sixes in a row. Change the ENTIRE score to 0 and switch player
     */
     console.clear();
-    console.log('Previous: ' + prevCount);
+    console.log('Previous Dice One: ' + prevCount);
     console.log('Dice One: ' + dice);
     console.log('Dice Two: ' + diceTwo);
-    //If previous count is 6
-    if (prevCount === 6) {
-      //and if current dice is 6
-      if (dice === 6) {
+    //If previous count is 6 and if current dice is 6
+    if (prevCount === 6 && dice === 6) {
         //set the score and textcontent to 0
         document.querySelector('#score-' + activePlayer).textContent = 0;
         scores[activePlayer] = 0;
         prevCount = 0; //Sets previous count to 0 because player lost due to 6 and 6
         nextPlayer(); //switch to next player1
       }
-    }
-
-    prevCount = dice;
-
-    //3. Update the round score ONLY IF Rolled Number !== 1
-    if (dice !== 1 && diceTwo !== 1) {
+      //3. Update the round score ONLY IF Rolled Number !== 1
+      else if (dice !== 1 && diceTwo !== 1) {
       roundScore += dice;
       document.querySelector('#current-' + activePlayer).textContent = roundScore;
     } else {
       nextPlayer();
     }
+
+    prevCount = dice;
   }
 
 });
